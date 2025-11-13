@@ -88,15 +88,17 @@
 }
 
 .float {
-  animation: float 3s ease-in-out infinite;
+  /* disable continuous float animation to avoid compositor churn */
+  animation: none !important;
 }
 
 .glow {
-  animation: glow 3s ease-in-out infinite;
+  /* disable continuous glow animation to reduce repaints */
+  animation: none !important;
 }
 
 .fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: none !important;
 }
 
 @keyframes fadeIn {
@@ -111,7 +113,34 @@
 }
 
 .scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
+  animation: none !important;
+}
+
+/* Disable entrance animations that were applied to many elements (improves scroll perf) */
+.animate-fade-up {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Additional performance overrides: remove heavy shadows and disable large hover transforms that may trigger repaints */
+.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl {
+  box-shadow: none !important;
+}
+
+/* Tailwind's hover:scale-105 and similar classes generate transform on hover; disable them to avoid layout thrash during scroll interactions */
+.hover\:scale-105, .hover\:scale-110, .scale-105, .scale-110 {
+  transform: none !important;
+}
+
+/* Reset will-change to avoid forcing layers */
+* {
+  will-change: auto !important;
+}
+
+/* Reduce heavy outline/shadow on focus to simpler border to avoid repaints */
+:focus {
+  box-shadow: none !important;
 }
 
 @keyframes scaleIn {
