@@ -45,20 +45,28 @@
   }
 
   .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.37)];
-    animation: glass-morph 8s infinite;
+    /* Use a lightweight translucent background instead of backdrop-filter to avoid repaint jank */
+    @apply bg-white/5 border border-white/10 rounded-2xl shadow-[0_6px_18px_rgba(0,0,0,0.24)];
+    /* Disable heavy backdrop animation to improve scroll performance */
+    animation: none;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }
 
-@keyframes glass-morph {
-  0%, 100% {
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-  50% {
-    backdrop-filter: blur(15px);
-    background-color: rgba(255, 255, 255, 0.08);
-  }
+/* Removed glass-morph animation to avoid continuous backdrop-filter changes which cause repainting */
+
+/* Disable Tailwind backdrop-blur utilities (no-op) to improve mobile/desktop scroll performance */
+.backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg, .backdrop-blur-xl {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Also disable other heavy filters used by utilities */
+.blur-3xl, .filter, .backdrop-filter {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  filter: none !important;
 }
 
 @keyframes float {

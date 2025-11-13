@@ -65,7 +65,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1A1F2C] via-[#222222] to-[#1A1F2C] overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-30"></div>
       
       {/* Gradient Orbs */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
