@@ -4,70 +4,75 @@
 
 ![Nexmail Logo](public/favicon.ico)
 
-**AI-Powered Email Management Platform**
+**AI-Powered Email Management Platform with Spam Detection**
 
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.4.1-purple.svg)](https://vitejs.dev/)
-[![Supabase](https://img.shields.io/badge/Supabase-2.48.1-green.svg)](https://supabase.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.11-38bdf8.svg)](https://tailwindcss.com/)
+
+[Live Demo](https://sprint2fazed.vercel.app) • [Report Bug](https://github.com/Keerthanreddy01/Sprint2Fazed/issues) • [Request Feature](https://github.com/Keerthanreddy01/Sprint2Fazed/issues)
 
 </div>
 
 ## 📋 Table of Contents
 
-- [About](#about)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Development](#development)
-- [Project Structure](#project-structure)
-- [Database Setup](#database-setup)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+- [About](#-about)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Spam Detection](#-spam-detection)
+- [Deployment](#-deployment)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## 🎯 About
 
-Nexmail is a modern, AI-powered email management platform designed to revolutionize how you handle your emails. Built with cutting-edge technologies, Nexmail offers intelligent email summarization, automated responses, and smart categorization to help you stay organized and efficient.
+Nexmail is a modern, AI-powered email management platform designed to revolutionize how you handle your emails. Built with cutting-edge technologies, Nexmail offers intelligent email summarization, automated spam detection, and smart categorization to help you stay organized and efficient.
 
 ### Key Highlights
 
 - ✨ **AI-Driven Summarization**: Get instant summaries of your emails
-- 🤖 **Automated Responses**: Smart AI-generated email responses
-- 📊 **Analytics Dashboard**: Track your email patterns and productivity
+- 🛡️ **Advanced Spam Detection**: Real-time spam detection with detailed scoring
+- 📊 **Email Management**: Organize emails with categories and search
 - 🎨 **Modern UI**: Beautiful, responsive design with dark mode support
-- 🔒 **Secure**: Built with Supabase for secure authentication and data management
+- 🔒 **Privacy-First**: All data stored locally in your browser (localStorage)
+- ⚡ **No Backend Required**: Works completely offline
 
 ## ✨ Features
 
 ### Core Features
 
 - **Email Management**
-  - Intelligent email categorization
+  - Intelligent email categorization (Inbox, Spam, Sent, Drafts)
   - Smart search functionality
-  - Calendar integration
-  - Priority notifications
+  - Mark as read/unread
+  - Star/unstar emails
+  - Delete emails
+  - Email detail view
+
+- **Spam Detection**
+  - Real-time spam detection algorithm
+  - Spam score calculation (0-100)
+  - Detailed detection reasons
+  - Pre-send spam warnings
+  - Automatic spam flagging
 
 - **AI Capabilities**
   - Email summarization
-  - Automated response generation
   - Pattern analysis
   - Smart suggestions
 
 - **User Experience**
+  - Simple email-based authentication (no password required)
   - Responsive design (mobile, tablet, desktop)
   - Dark mode support
   - Smooth animations and transitions
   - Intuitive navigation
-
-- **Subscription Plans**
-  - Free tier with basic features
-  - Professional plan with advanced features
-  - Enterprise plan with unlimited access
+  - Toast notifications
 
 ## 🛠 Tech Stack
 
@@ -82,19 +87,17 @@ Nexmail is a modern, AI-powered email management platform designed to revolution
 - **Radix UI** - Accessible component primitives
 - **Lucide React** - Icon library
 
-### Backend & Services
-
-- **Supabase** - Backend as a Service (BaaS)
-  - Authentication
-  - Database (PostgreSQL)
-  - Real-time subscriptions
-  - Row Level Security (RLS)
-
 ### State Management & Data Fetching
 
 - **TanStack Query (React Query) 5.56.2** - Server state management
 - **React Hook Form 7.53.0** - Form handling
 - **Zod 3.23.8** - Schema validation
+
+### Data Storage
+
+- **localStorage** - Client-side data persistence
+- No backend required
+- Works completely offline
 
 ### Development Tools
 
@@ -110,7 +113,6 @@ Before you begin, ensure you have the following installed:
 - **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
 - **npm** or **yarn** or **pnpm** - Package manager
 - **Git** - Version control
-- **Supabase Account** - [Sign up](https://supabase.com/)
 
 ## 🚀 Installation
 
@@ -138,57 +140,7 @@ Using pnpm:
 pnpm install
 ```
 
-### 3. Environment Setup
-
-Create a `.env` file in the root directory:
-
-```bash
-cp .env.example .env
-```
-
-Or create a new `.env` file with the following variables:
-
-```env
-VITE_SUPABASE_URL=your-supabase-project-url
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
-
-## ⚙️ Configuration
-
-### Supabase Setup
-
-1. **Create a Supabase Project**
-   - Go to [Supabase Dashboard](https://app.supabase.com/)
-   - Create a new project
-   - Note your project URL and anon key
-
-2. **Update Supabase Configuration**
-
-   Edit `src/lib/supabase.ts`:
-
-   ```typescript
-   const supabaseUrl = 'https://your-project-url.supabase.co';
-   const supabaseKey = 'your-anon-key';
-   ```
-
-   Or use environment variables:
-
-   ```typescript
-   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-   const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-   ```
-
-3. **Run Database Migrations**
-
-   - Go to your Supabase project dashboard
-   - Navigate to SQL Editor
-   - Run the migration file: `supabase/migrations/create_tables.sql`
-
-## 📖 Usage
-
-### Development Server
-
-Start the development server:
+### 3. Start Development Server
 
 ```bash
 npm run dev
@@ -196,35 +148,33 @@ npm run dev
 
 The application will be available at `http://localhost:8080`
 
-### Build for Production
+## 📖 Usage
 
-Create a production build:
+### Getting Started
+
+1. **Sign Up**: Click "Get Started" and enter your email address
+2. **Login**: Enter your email to access your dashboard
+3. **View Emails**: Browse your inbox with sample emails pre-loaded
+4. **Compose**: Click "Compose" to send new emails
+5. **Spam Detection**: System automatically detects spam emails
+
+### Development Commands
 
 ```bash
+# Start development server
+npm run dev
+
+# Build for production
 npm run build
-```
 
-The build output will be in the `dist` directory.
-
-### Preview Production Build
-
-Preview the production build locally:
-
-```bash
+# Preview production build
 npm run preview
-```
 
-### Linting
-
-Run ESLint to check for code issues:
-
-```bash
+# Run linter
 npm run lint
 ```
 
-## 💻 Development
-
-### Project Structure
+## 💻 Project Structure
 
 ```
 nexmail-zenith-main/
@@ -236,19 +186,22 @@ nexmail-zenith-main/
 │   │   └── ui/            # shadcn/ui components
 │   ├── hooks/             # Custom React hooks
 │   ├── lib/               # Utility functions
-│   │   ├── supabase.ts   # Supabase client
+│   │   ├── spamDetection.ts  # Spam detection engine
 │   │   └── utils.ts      # Helper functions
 │   ├── pages/             # Page components
-│   │   ├── Index.tsx     # Home page
+│   │   ├── Index.tsx     # Landing page
+│   │   ├── Login.tsx     # Login page
+│   │   ├── Signup.tsx    # Signup page
+│   │   ├── Dashboard.tsx # Email inbox
+│   │   ├── EmailDetail.tsx # Email detail view
+│   │   ├── Compose.tsx    # Compose email
 │   │   └── NotFound.tsx  # 404 page
 │   ├── types/             # TypeScript type definitions
+│   │   ├── email.ts       # Email types
 │   │   └── plan.ts       # Plan types
 │   ├── App.tsx            # Main App component
 │   ├── main.tsx           # Entry point
 │   └── index.css          # Global styles
-├── supabase/
-│   └── migrations/        # Database migrations
-│       └── create_tables.sql
 ├── .gitignore            # Git ignore rules
 ├── components.json        # shadcn/ui configuration
 ├── eslint.config.js      # ESLint configuration
@@ -263,52 +216,38 @@ nexmail-zenith-main/
 ### Key Files
 
 - **`src/App.tsx`** - Main application component with routing
-- **`src/pages/Index.tsx`** - Home page with features and pricing
-- **`src/lib/supabase.ts`** - Supabase client configuration
+- **`src/pages/Dashboard.tsx`** - Email inbox with spam detection
+- **`src/lib/spamDetection.ts`** - Spam detection algorithm
+- **`src/pages/Compose.tsx`** - Email composition with spam check
 - **`vite.config.ts`** - Vite build configuration
 - **`tailwind.config.ts`** - Tailwind CSS theme and utilities
 
-### Adding New Components
+## 🛡️ Spam Detection
 
-This project uses [shadcn/ui](https://ui.shadcn.com/) for components. To add a new component:
+### How It Works
 
-```bash
-npx shadcn-ui@latest add [component-name]
+The spam detection system uses multiple heuristics to identify spam emails:
+
+1. **Keyword Detection**: Checks for common spam keywords
+2. **Pattern Recognition**: Identifies suspicious patterns (excessive caps, punctuation)
+3. **URL Analysis**: Counts and analyzes URLs in emails
+4. **Sender Validation**: Validates email format and sender patterns
+5. **Phrase Detection**: Identifies common spam phrases
+
+### Spam Score
+
+- **Score Range**: 0-100
+- **Threshold**: ≥70 = Spam
+- **Display**: Shows score and detailed reasons
+
+### Example
+
+```typescript
+// Spam detection automatically runs on:
+// - Incoming emails
+// - Composed emails (before sending)
+// - Email detail view
 ```
-
-### Code Style
-
-- Follow TypeScript best practices
-- Use functional components with hooks
-- Follow React best practices
-- Maintain consistent code formatting
-
-## 🗄 Database Setup
-
-### Tables
-
-The application uses the following Supabase tables:
-
-1. **`user_plans`**
-   - Stores user subscription plans
-   - Fields: `id`, `user_id`, `plan_type`, `created_at`, `updated_at`
-
-2. **`usage_history`**
-   - Tracks user actions and usage
-   - Fields: `id`, `user_id`, `action`, `details`, `created_at`
-
-### Row Level Security (RLS)
-
-All tables have RLS enabled with policies:
-- Users can only view/insert their own data
-- Secure by default
-
-### Running Migrations
-
-1. Open Supabase Dashboard
-2. Go to SQL Editor
-3. Copy and paste the contents of `supabase/migrations/create_tables.sql`
-4. Execute the SQL
 
 ## 🚢 Deployment
 
@@ -316,10 +255,9 @@ All tables have RLS enabled with policies:
 
 1. Push your code to GitHub
 2. Import your repository in [Vercel](https://vercel.com/)
-3. Add environment variables:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-4. Deploy!
+3. Build command: `npm run build`
+4. Output directory: `dist`
+5. Deploy!
 
 ### Netlify
 
@@ -327,16 +265,21 @@ All tables have RLS enabled with policies:
 2. Import your repository in [Netlify](https://www.netlify.com/)
 3. Build command: `npm run build`
 4. Publish directory: `dist`
-5. Add environment variables
-6. Deploy!
+5. Deploy!
+
+### GitHub Pages
+
+1. Build the project: `npm run build`
+2. Push the `dist` folder to `gh-pages` branch
+3. Enable GitHub Pages in repository settings
 
 ### Other Platforms
 
 The built `dist` folder can be deployed to any static hosting service:
-- GitHub Pages
 - AWS S3 + CloudFront
 - Azure Static Web Apps
 - Google Cloud Storage
+- Cloudflare Pages
 
 ## 🤝 Contributing
 
@@ -350,11 +293,20 @@ Contributions are welcome! Please follow these steps:
 
 ### Development Guidelines
 
-- Write clear commit messages
+- Write clear commit messages following [Conventional Commits](https://www.conventionalcommits.org/)
 - Follow the existing code style
 - Add comments for complex logic
 - Test your changes thoroughly
 - Update documentation as needed
+- Ensure TypeScript types are correct
+- Run `npm run lint` before committing
+
+### Code Style
+
+- Use functional components with hooks
+- Follow React best practices
+- Use TypeScript for type safety
+- Maintain consistent code formatting
 
 ## 📝 License
 
@@ -366,19 +318,19 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- [Supabase](https://supabase.com/) for the amazing backend platform
 - [shadcn/ui](https://ui.shadcn.com/) for the beautiful component library
 - [Vite](https://vitejs.dev/) for the fast build tool
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
+- [React](https://reactjs.org/) for the amazing UI library
 
 ## 📞 Support
 
-For support, email support@nexmail.com or open an issue in the GitHub repository.
+For support, open an issue in the [GitHub repository](https://github.com/Keerthanreddy01/Sprint2Fazed/issues).
 
 ## 🔗 Links
 
 - [GitHub Repository](https://github.com/Keerthanreddy01/Sprint2Fazed)
-- [Documentation](#)
+- [Live Demo](https://sprint2fazed.vercel.app)
 - [Issue Tracker](https://github.com/Keerthanreddy01/Sprint2Fazed/issues)
 
 ---

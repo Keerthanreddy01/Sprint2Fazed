@@ -191,3 +191,4 @@ export function categorizeEmail(email: { subject: string; body: string }): 'inbo
   return 'inbox';
 }
 
+
