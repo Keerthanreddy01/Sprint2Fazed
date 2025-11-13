@@ -1,4 +1,4 @@
-import { Mail, ArrowRight, SearchIcon, Sparkles, SendHorizonal, Calendar, Bell, Check, X } from "lucide-react";
+import { Mail, ArrowRight, Search, Calendar, Bell, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Plan } from "@/types/plan";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -105,6 +106,15 @@ const Index = () => {
           <Button size="lg" variant="outline" className="text-white border-white/20 hover:bg-white/10" onClick={() => navigate("/login")}>
             Sign In
           </Button>
+          <Button size="lg" variant="ghost" className="text-white/80" onClick={() => {
+            // Demo mode: create a sample user and navigate to dashboard
+            const demoUser = { id: 'demo-user', email: 'demo@nexmail.test', name: 'Demo User', created_at: new Date().toISOString() };
+            localStorage.setItem('nexmail_user', JSON.stringify(demoUser));
+            localStorage.setItem('nexmail_auth', 'true');
+            navigate('/dashboard');
+          }}>
+            Try Demo
+          </Button>
         </div>
       </section>
 
@@ -142,7 +152,7 @@ const Index = () => {
             <p className="text-white/80">Get intelligent alerts for important emails and deadlines.</p>
           </div>
           <div className="glass p-8 text-center hover:scale-105 transform duration-300">
-            <SearchIcon className="h-12 w-12 mx-auto mb-4 text-primary" />
+            <Search className="h-12 w-12 mx-auto mb-4 text-primary" />
             <h3 className="text-xl font-semibold text-white mb-2">Intelligent Search</h3>
             <p className="text-white/80">Find any email instantly with our smart search.</p>
           </div>
@@ -246,10 +256,9 @@ const Index = () => {
               <Mail className="h-6 w-6 text-white" />
               <span className="text-xl font-bold text-white">Nexmail</span>
             </div>
-            <p className="text-sm">
-              Developed by 2nd CSM Students<br />
-              Making email management smarter
-            </p>
+              <p className="text-sm">
+                Making email management smarter
+              </p>
           </div>
           <div>
             <h4 className="text-white font-semibold mb-4">Links</h4>
@@ -276,6 +285,14 @@ const Index = () => {
         </div>
         <div className="mt-8 pt-8 border-t border-white/10 text-center text-white/60">
           <p>&copy; {new Date().getFullYear()} Nexmail. All rights reserved.</p>
+        </div>
+        {/* Watermark inside footer so it only appears when footer is visible */}
+        <div className="absolute inset-0 flex items-end justify-center z-0 pointer-events-none" aria-hidden="true">
+          <div className="w-full text-center select-none pb-6">
+            <span className="inline-block leading-none font-extrabold tracking-tight text-white" style={{fontSize: 'clamp(36px, 6vw, 96px)', opacity: 0.04}}>
+              Developed by Team Fazed
+            </span>
+          </div>
         </div>
       </footer>
     </div>
