@@ -1,56 +1,20 @@
 import { Mail, ArrowRight, SearchIcon, Sparkles, SendHorizonal, Calendar, Bell, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-import { Plan, PlanType } from "@/types/plan";
-import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { Plan } from "@/types/plan";
 
 const Index = () => {
   const [isVisible, setIsVisible] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Check active session
-    const session = supabase.auth.getSession();
-    setUser(session?.user || null);
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSignUp = async (plan: PlanType) => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: 'user@example.com', // You'll need to add an email input
-        password: 'password', // You'll need to add a password input
-      });
-
-      if (error) throw error;
-
-      // Store user's selected plan
-      const { error: planError } = await supabase
-        .from('user_plans')
-        .insert([
-          { user_id: data.user.id, plan_type: plan, created_at: new Date() }
-        ]);
-
-      if (planError) throw planError;
-
-      toast.success('Successfully signed up!');
-      setSelectedPlan(plan);
-    } catch (error) {
-      toast.error('Error signing up: ' + error.message);
-    } finally {
-      setLoading(false);
+    // Check if user is logged in
+    const auth = localStorage.getItem("nexmail_auth");
+    if (auth) {
+      navigate("/dashboard");
     }
-  };
+  }, [navigate]);
 
   const plans: Plan[] = [
     {
@@ -119,8 +83,8 @@ const Index = () => {
             <a href="#features" className="text-white/90 hover:text-white transition-colors">Features</a>
             <a href="#plans" className="text-white/90 hover:text-white transition-colors">Plans</a>
             <a href="#testimonials" className="text-white/90 hover:text-white transition-colors">Testimonials</a>
-            <Button variant="ghost" className="text-white hover:text-white/90">Login</Button>
-            <Button className="bg-primary text-white hover:bg-primary/90">Get Started</Button>
+            <Button variant="ghost" className="text-white hover:text-white/90" onClick={() => navigate("/login")}>Login</Button>
+            <Button className="bg-primary text-white hover:bg-primary/90" onClick={() => navigate("/signup")}>Get Started</Button>
           </div>
         </div>
       </nav>
@@ -134,12 +98,12 @@ const Index = () => {
           Experience the future of email with AI-driven summarization and automated responses. Stay organized and efficient with our intelligent email assistant.
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center animate-fade-up opacity-0 [animation-delay:600ms]">
-          <Button size="lg" className="bg-primary text-white hover:bg-primary/90">
+          <Button size="lg" className="bg-primary text-white hover:bg-primary/90" onClick={() => navigate("/signup")}>
             Get Started
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
-          <Button size="lg" variant="outline" className="text-white border-white/20 hover:bg-white/10">
-            Watch Demo
+          <Button size="lg" variant="outline" className="text-white border-white/20 hover:bg-white/10" onClick={() => navigate("/login")}>
+            Sign In
           </Button>
         </div>
       </section>
@@ -229,7 +193,7 @@ const Index = () => {
                     ? 'bg-primary hover:bg-primary/90' 
                     : 'bg-white/10 hover:bg-white/20'
                 } text-white transition-all duration-300`}
-                onClick={() => handleSignUp(plan.type)}
+                onClick={() => navigate("/signup")}
                 disabled={loading}
               >
                 {loading ? 'Processing...' : 'Get Started'}
