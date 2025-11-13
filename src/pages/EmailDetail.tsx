@@ -218,15 +218,49 @@ const EmailDetail = () => {
 
           {/* Actions */}
           <div className="mt-6 pt-6 border-t border-white/10 flex space-x-2">
-            <Button variant="outline" className="text-white border-white/20">
+            <Button
+              variant="outline"
+              className="text-white border-white/20"
+              onClick={() => {
+                // Prefill compose with reply
+                const params = new URLSearchParams();
+                params.set('to', email.from);
+                params.set('subject', `Re: ${email.subject}`);
+                params.set('body', `\n\n---\nOn ${new Date(email.created_at).toLocaleString()}, ${email.from} wrote:\n${email.body}`);
+                navigate(`/compose?${params.toString()}`);
+              }}
+            >
               <Reply className="mr-2 h-4 w-4" />
               Reply
             </Button>
-            <Button variant="outline" className="text-white border-white/20">
+            <Button
+              variant="outline"
+              className="text-white border-white/20"
+              onClick={() => {
+                // Prefill compose with forward
+                const params = new URLSearchParams();
+                params.set('subject', `Fwd: ${email.subject}`);
+                params.set('body', `\n\n--- Forwarded message ---\nFrom: ${email.from}\nDate: ${new Date(email.created_at).toLocaleString()}\nSubject: ${email.subject}\n\n${email.body}`);
+                navigate(`/compose?${params.toString()}`);
+              }}
+            >
               <Forward className="mr-2 h-4 w-4" />
               Forward
             </Button>
-            <Button variant="outline" className="text-white border-white/20">
+            <Button
+              variant="outline"
+              className="text-white border-white/20"
+              onClick={() => {
+                // Archive: move to trash category
+                if (!email || !user) return;
+                const stored = localStorage.getItem(`emails_${user.id}`);
+                const list: Email[] = stored ? JSON.parse(stored) : [];
+                const updated = list.map(e => e.id === email.id ? { ...e, category: 'trash' } : e);
+                localStorage.setItem(`emails_${user.id}`, JSON.stringify(updated));
+                toast.success('Archived');
+                navigate('/dashboard');
+              }}
+            >
               <Archive className="mr-2 h-4 w-4" />
               Archive
             </Button>

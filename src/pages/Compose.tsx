@@ -22,6 +22,18 @@ const Compose = () => {
     checkUser();
   }, []);
 
+  // Prefill fields from URL search params (reply/forward)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pTo = params.get('to');
+    const pSubject = params.get('subject');
+    const pBody = params.get('body');
+
+    if (pTo) setTo(pTo);
+    if (pSubject) setSubject(pSubject);
+    if (pBody) setBody(pBody);
+  }, []);
+
   const checkUser = () => {
     const auth = localStorage.getItem("nexmail_auth");
     const userData = localStorage.getItem("nexmail_user");
